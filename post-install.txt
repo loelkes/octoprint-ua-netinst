@@ -2,4 +2,4 @@
 
 # System setting
 cp /bootfs/setup-octoprint.sh /rootfs/root/
-echo "@reboot root /root/setup-octoprint.sh >> /var/log/octoprint-ua-netinst.log 2>&1" > /rootfs/etc/cron.d/octoprint-install
+echo "@reboot root /root/setup-octoprint.sh firstboot >> /var/log/octoprint-ua-netinst.log 2>&1" > /rootfs/etc/cron.d/octoprint-install
