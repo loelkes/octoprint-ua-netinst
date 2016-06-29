@@ -32,7 +32,7 @@ fi
 if [ $1 = 'secondboot' ]; then
 
 	# Install Octoprint and some basic tools
-	apt-get -y install nano screen python git python-pip python-dev
+	apt-get -y install nano screen python git python-pip python-dev libav-tools
 	cd /root/
 	git clone https://github.com/foosel/OctoPrint.git
 	cd OctoPrint
@@ -51,13 +51,17 @@ if [ $1 = 'secondboot' ]; then
 	echo "@reboot root /root/octoprint-ua-netinst.sh run >> /var/log/octoprint-ua-netinst.log 2>&1" > /etc/cron.d/octoprint-run
 
 	echo "Finished all the stuff."
-
+	
+	echo "Starting Octoprint"
 	screen -dmS octoprint octoprint --iknowwhatimdoing
+	echo "Starting mjpg-streamer"
 	screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so -w /root/mjpg-streamer/mjpg-streamer-experimental/www" -i "input_raspicam.so -x 1280 -y 720 -fps 2 -quality 100 -usestills"
 fi
 
 if [ $1 = 'run' ]; then
+	echo "Starting Octoprint"
         screen -dmS octoprint octoprint --iknowwhatimdoing
+        echo "Starting mjpg-streamer"
         screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so -w /root/mjpg-streamer/mjpg-streamer-experimental/www" -i "input_raspicam.so -x 1280 -y 720 -fps 2 -quality 100 -usestills"
 fi
 
