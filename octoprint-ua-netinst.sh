@@ -23,7 +23,7 @@ if [ $1 = 'firstboot' ]; then
 
 	apt-get -y install rpi-update
 	rpi-update
-	echo "@reboot root /root/setup-octoprint.sh secondboot >> /var/log/octoprint-ua-netinst.log 2>&1" > /etc/cron.d/octoprint-install
+	echo "@reboot root /root/octoprint-ua-netinst.sh secondboot >> /var/log/octoprint-ua-netinst.log 2>&1" > /etc/cron.d/octoprint-install
 	echo "Rebooting..."
 	reboot
 
