@@ -48,11 +48,17 @@ if [ $1 = 'secondboot' ]; then
 
 	# Remove boot cronjob
 	rm /etc/cron.d/octoprint-install
+	echo "@reboot root /root/octoprint-ua-netinst.sh run >> /var/log/octoprint-ua-netinst.log 2>&1" > /etc/cron.d/octoprint-run
 
-	echo "Finished all the stuff. Rebooting now..."
+	echo "Finished all the stuff."
 
 	screen -dmS octoprint octoprint --iknowwhatimdoing
 	screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so -w /root/mjpg-streamer/mjpg-streamer-experimental/www" -i "input_raspicam.so -x 1280 -y 720 -fps 2 -quality 100 -usestills"
+fi
+
+if [ $1 = 'run' ]; then
+        screen -dmS octoprint octoprint --iknowwhatimdoing
+        screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so -w /root/mjpg-streamer/mjpg-streamer-experimental/www" -i "input_raspicam.so -x 1280 -y 720 -fps 2 -quality 100 -usestills"
 fi
 
 if [ $1 = 'help' ]; then
