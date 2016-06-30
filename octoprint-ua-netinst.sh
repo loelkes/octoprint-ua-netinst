@@ -37,6 +37,8 @@ if [ $1 = 'secondboot' ]; then
 	git clone https://github.com/foosel/OctoPrint.git
 	cd OctoPrint
 	python setup.py install
+	
+	useradd -m -s /bin/bash octoprint
 
 	## Install mjpeg-streamer
 	cd /root/
@@ -53,16 +55,16 @@ if [ $1 = 'secondboot' ]; then
 	echo "Finished all the stuff."
 	
 	echo "Starting Octoprint"
-	screen -dmS octoprint octoprint --iknowwhatimdoing
+	su -c 'octoprint --daemon start' octoprint
 	echo "Starting mjpg-streamer"
-	screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so -w /root/mjpg-streamer/mjpg-streamer-experimental/www" -i "input_raspicam.so -x 1280 -y 720 -fps 2 -quality 100 -usestills"
+	screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so" -i "input_raspicam.so -x 1280 -y 720 -fps 1 -usestills"
 fi
 
 if [ $1 = 'run' ]; then
 	echo "Starting Octoprint"
-        screen -dmS octoprint octoprint --iknowwhatimdoing
+	su -c 'octoprint --daemon start' octoprint
         echo "Starting mjpg-streamer"
-        screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so -w /root/mjpg-streamer/mjpg-streamer-experimental/www" -i "input_raspicam.so -x 1280 -y 720 -fps 2 -quality 100 -usestills"
+        screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so" -i "input_raspicam.so -x 1280 -y 720 -fps 1 -usestills"
 fi
 
 if [ $1 = 'help' ]; then
