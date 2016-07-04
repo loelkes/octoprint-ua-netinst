@@ -39,6 +39,7 @@ if [ $1 = 'secondboot' ]; then
 	python setup.py install
 	
 	useradd -m -s /bin/bash octoprint
+	usermod -a -G dialout
 
 	## Install mjpeg-streamer
 	cd /root/
