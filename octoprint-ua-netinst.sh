@@ -14,6 +14,9 @@ if [ $1 = 'firstboot' ]; then
 	echo "over_voltage=6" >> /boot/config.txt
 	echo "temp_limit=75" >> /boot/config.txt
 	echo "boot_delay=" >> /boot/config.txt
+	
+	# Give GPU some memory
+	echo "gpu_mem=128" >> /boot/config.txt
 
 	# Disable the splash screen
 	echo "disable_splash=1" >> /boot/config.txt
