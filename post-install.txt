@@ -1,5 +1,9 @@
 #!/bin/sh
 
-# System setting
-cp /bootfs/octoprint-ua-netinst.sh /rootfs/root/
-echo "@reboot root /root/octoprint-ua-netinst.sh firstboot >> /var/log/octoprint-ua-netinst.log 2>&1" > /rootfs/etc/cron.d/octoprint-install
+# Install Octoprint
+# cp /bootfs/octoprint-ua-netinst.sh /rootfs/root/
+# echo "@reboot root /root/octoprint-ua-netinst.sh firstboot >> /var/log/octoprint-ua-netinst.log 2>&1" > /rootfs/etc/cron.d/octoprint-install
+
+# Install APA102
+# cp /bootfs/apa102.sh /rootfs/root/
+# echo "@reboot root /root/apa102.sh firstboot >> /var/log/apa102-ua-netinst.log 2>&1" > /rootfs/etc/cron.d/apa102-install

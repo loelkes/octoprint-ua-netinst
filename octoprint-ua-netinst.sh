@@ -5,7 +5,7 @@
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-if [ $1 = 'firstboot' ]; then
+if [ $1 = 'configure_pi' ]; then
 
 	# Overclocking
 	echo "arm_freq=1000" >> /boot/config.txt
@@ -14,15 +14,11 @@ if [ $1 = 'firstboot' ]; then
 	echo "over_voltage=6" >> /boot/config.txt
 	echo "temp_limit=75" >> /boot/config.txt
 	echo "boot_delay=" >> /boot/config.txt
-	
-	# Give GPU some memory
-	echo "gpu_mem=128" >> /boot/config.txt
 
 	# Disable the splash screen
 	echo "disable_splash=1" >> /boot/config.txt
 
-	# Enable camera
-	echo "start_x=1" >> /boot/config.txt
+
 
 	apt-get -y install rpi-update
 	rpi-update
@@ -35,7 +31,7 @@ fi
 if [ $1 = 'install_octoprint' ]; then
 
 	# Install Octoprint and some basic tools
-	apt-get -y install nano screen python git python-pip python-dev libav-tools
+	apt-get -y install sudo nano screen python git python-pip python-dev libav-tools
 	cd /root/
 	git clone https://github.com/foosel/OctoPrint.git
 	cd OctoPrint
@@ -43,9 +39,18 @@ if [ $1 = 'install_octoprint' ]; then
 	
 	useradd -m -s /bin/bash octoprint
 	usermod -a -G dialout octoprint
+	
+	sudo -u octoprint octoprint --daemon start
+	echo "@reboot root sudo -u octoprint octoprint --daemon start" > /etc/cron.d/octoprint-daemon
 fi
 
 if [ $1 = 'install_mjpg-streamer' ]; then
+
+	# Enable camera
+	echo "start_x=1" >> /boot/config.txt
+	
+	# Give GPU some memory
+	echo "gpu_mem=128" >> /boot/config.txt
 
 	## Install mjpeg-streamer
 	cd /root/
@@ -61,17 +66,8 @@ if [ $1 = 'install_mjpg-streamer' ]; then
 
 	echo "Finished all the stuff."
 	
-	# echo "Starting Octoprint"
-	# su -c 'octoprint --daemon start' octoprint
 	# echo "Starting mjpg-streamer"
 	# screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so" -i "input_raspicam.so -x 1280 -y 720 -fps 1 -usestills"
-fi
-
-if [ $1 = 'run' ]; then
-	# echo "Starting Octoprint"
-	# su -c 'octoprint --daemon start' octoprint
-        # echo "Starting mjpg-streamer"
-        # screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so" -i "input_raspicam.so -x 1280 -y 720 -fps 1 -usestills"
 fi
 
 if [ $1 = 'help' ]; then
