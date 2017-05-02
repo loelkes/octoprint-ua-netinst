@@ -26,13 +26,13 @@ if [ $1 = 'firstboot' ]; then
 
 	apt-get -y install rpi-update
 	rpi-update
-	echo "@reboot root /root/octoprint-ua-netinst.sh secondboot >> /var/log/octoprint-ua-netinst.log 2>&1" > /etc/cron.d/octoprint-install
+	#echo "@reboot root /root/octoprint-ua-netinst.sh secondboot >> /var/log/octoprint-ua-netinst.log 2>&1" > /etc/cron.d/octoprint-install
 	echo "Rebooting..."
 	reboot
 
 fi
 
-if [ $1 = 'secondboot' ]; then
+if [ $1 = 'install_octoprint' ]; then
 
 	# Install Octoprint and some basic tools
 	apt-get -y install nano screen python git python-pip python-dev libav-tools
@@ -43,6 +43,9 @@ if [ $1 = 'secondboot' ]; then
 	
 	useradd -m -s /bin/bash octoprint
 	usermod -a -G dialout octoprint
+fi
+
+if [ $1 = 'install_mjpg-streamer' ]; then
 
 	## Install mjpeg-streamer
 	cd /root/
@@ -58,17 +61,17 @@ if [ $1 = 'secondboot' ]; then
 
 	echo "Finished all the stuff."
 	
-	echo "Starting Octoprint"
-	su -c 'octoprint --daemon start' octoprint
-	echo "Starting mjpg-streamer"
-	screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so" -i "input_raspicam.so -x 1280 -y 720 -fps 1 -usestills"
+	# echo "Starting Octoprint"
+	# su -c 'octoprint --daemon start' octoprint
+	# echo "Starting mjpg-streamer"
+	# screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so" -i "input_raspicam.so -x 1280 -y 720 -fps 1 -usestills"
 fi
 
 if [ $1 = 'run' ]; then
-	echo "Starting Octoprint"
-	su -c 'octoprint --daemon start' octoprint
-        echo "Starting mjpg-streamer"
-        screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so" -i "input_raspicam.so -x 1280 -y 720 -fps 1 -usestills"
+	# echo "Starting Octoprint"
+	# su -c 'octoprint --daemon start' octoprint
+        # echo "Starting mjpg-streamer"
+        # screen -dmS mjpg-streamer mjpg_streamer -o "output_http.so" -i "input_raspicam.so -x 1280 -y 720 -fps 1 -usestills"
 fi
 
 if [ $1 = 'help' ]; then
