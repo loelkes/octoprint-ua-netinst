@@ -31,7 +31,7 @@ if [ $1 == 'secondboot' ]; then
 
 	# Install basic tools
 	apt-get -y install nano screen python3 git python3-pip raspi-config libjpeg8-dev zlib1g-dev python3-numpy
-	pip3 install spidev pillow websockets asyncio
+	pip3 install spidev pillow websockets asyncio ujson
   	cd ~
   	git clone https://github.com/loelkes/APA102_Pi.git
 	rm /etc/cron.d/apa102-install
